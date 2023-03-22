@@ -111,7 +111,7 @@ def review():
             print("------ Diff ------")
             print(diff_text)
 
-            response = openai.Completion.create(
+            response = openai.ChatCompletion.create(
                 engine=args.openai_engine,
                 prompt=(f"Bellow is the code patch, please help me do a brief code review," \
                     "if any bug risk and improvement suggestion are welcome, diff:\n```{diff_text}```"),
@@ -126,7 +126,7 @@ def review():
         except Exception as e:
             error_message = str(e)
             print(error_message)
-            pull_request.create_issue_comment(f"ChatGPT was unable to process the response about {file_name}")
+            # pull_request.create_issue_comment(f"ChatGPT was unable to process the response about {file_name}")
 
 
 def get_content_patch():
