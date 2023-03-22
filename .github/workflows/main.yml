@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-latest # Specify the runner to run the job on
     name: ChatGPT explain code # Job name
     steps:
+      - uses: actions/checkout@v3
       - name: ChatGPT explain code # Step name
-        uses: OUXT-Polaris/chatgpt-github-actions@feature/review_mode
+        uses: ./
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }} # Get the OpenAI API key from repository secrets
           github_token: ${{ secrets.GITHUB_TOKEN }} # Get the Github Token from repository secrets
