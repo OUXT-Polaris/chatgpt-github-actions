@@ -112,8 +112,7 @@ def review():
 
     for choice in response['choices']:
         print(choice['message']['content'])
-        pull_request.create_issue_comment(
-            f"ChatGPT's response about ``{file_name}``:\n {choice['message']['content']}")
+        pull_request.create_issue_comment(f"{choice['message']['content']}")
 
 
 
