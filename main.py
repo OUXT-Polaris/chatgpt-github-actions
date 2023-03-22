@@ -106,7 +106,7 @@ def review():
             continue
 
         try:
-            file_name = diff_text.split("b/")[1].splitlines()[0]
+            file_name = diff_text.split("+++ b/")[1].splitlines()[0]
             print(file_name)
             print("------ Diff ------")
             print(diff_text)
