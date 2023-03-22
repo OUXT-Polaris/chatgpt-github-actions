@@ -32,8 +32,6 @@ inputs:
     default: 'files'
     type: choice
     options:
-    - files
-    - patch
     - review
 runs:
   using: 'docker'
