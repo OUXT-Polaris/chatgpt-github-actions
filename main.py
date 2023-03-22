@@ -99,37 +99,22 @@ def review():
         pull_request.create_issue_comment(f"Patch file does not contain any changes")
         return
 
-    parsed_text = content.split("diff")
+    response = openai.ChatCompletion.create(
+        model=args.openai_engine,
+        messages=[{"role": "user", "content": "Bellow is the code patch, please help me do a brief code review," \
+            "if any bug risk and improvement suggestion are welcome, diff:\n" + content}],
+        # prompt=(f"Bellow is the code patch, please help me do a brief code review," \
+        #     "if any bug risk and improvement suggestion are welcome, diff:\n```{diff_text}```"),
+        temperature=float(args.openai_temperature),
+        max_tokens=int(args.openai_max_tokens)
+    )
+    print(response)
 
-    for diff_text in parsed_text:
-        if len(diff_text) == 0:
-            continue
+    for choice in response['choices']:
+        print(choice['message']['content'])
+        pull_request.create_issue_comment(
+            f"ChatGPT's response about ``{file_name}``:\n {choice['message']['content']}")
 
-        try:
-            file_name = diff_text.split("+++ b/")[1].splitlines()[0]
-            print(file_name)
-            print("------ Diff ------")
-            print(diff_text)
-
-            response = openai.ChatCompletion.create(
-                model=args.openai_engine,
-                messages=[{"role": "user", "content": "Bellow is the code patch, please help me do a brief code review," \
-                    "if any bug risk and improvement suggestion are welcome, diff:\n" + diff_text}],
-                # prompt=(f"Bellow is the code patch, please help me do a brief code review," \
-                #     "if any bug risk and improvement suggestion are welcome, diff:\n```{diff_text}```"),
-                temperature=float(args.openai_temperature),
-                max_tokens=int(args.openai_max_tokens)
-            )
-            print(response)
-
-            for choice in response['choices']:
-                print(choice['message']['content'])
-                pull_request.create_issue_comment(
-                    f"ChatGPT's response about ``{file_name}``:\n {choice['message']['content']}")
-        except Exception as e:
-            error_message = str(e)
-            print(error_message)
-            # pull_request.create_issue_comment(f"ChatGPT was unable to process the response about {file_name}")
 
 
 def get_content_patch():
