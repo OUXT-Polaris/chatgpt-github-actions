@@ -121,10 +121,11 @@ def review():
                 max_tokens=int(args.openai_max_tokens)
             )
             print(response)
-            print(response['choices'][0]['text'])
 
-            pull_request.create_issue_comment(
-                f"ChatGPT's response about ``{file_name}``:\n {response['choices'][0]['text']}")
+            for choice in response['choices']:
+                print(choice['message']['content'])
+                pull_request.create_issue_comment(
+                    f"ChatGPT's response about ``{file_name}``:\n {choice['message']['content']}")
         except Exception as e:
             error_message = str(e)
             print(error_message)
