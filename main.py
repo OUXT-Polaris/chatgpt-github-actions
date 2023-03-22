@@ -39,7 +39,7 @@ def review():
         model=args.openai_engine,
         messages=[
             {"role": "system", "content": "You are a helpful code reviewer. \
-                If you have suggestions for modifications to the code, please output them in the following format \
+                If you have suggestions for modifications to the code, please respond once per modification and output the modified code in the following format \
                 ```suggestion \
                     modified code \
                 ````"},
