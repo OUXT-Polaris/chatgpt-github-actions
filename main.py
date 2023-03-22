@@ -112,7 +112,7 @@ def review():
             print(diff_text)
 
             response = openai.ChatCompletion.create(
-                engine=args.openai_engine,
+                model=args.openai_engine,
                 messages=[{"role": "user", "content": "Bellow is the code patch, please help me do a brief code review," \
                     "if any bug risk and improvement suggestion are welcome, diff:\n```{diff_text}```"}],
                 # prompt=(f"Bellow is the code patch, please help me do a brief code review," \
