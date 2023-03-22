@@ -108,6 +108,8 @@ def review():
         try:
             file_name = diff_text.split("b/")[1].splitlines()[0]
             print(file_name)
+            print("------ Diff ------")
+            print(diff)
 
             response = openai.Completion.create(
                 engine=args.openai_engine,
