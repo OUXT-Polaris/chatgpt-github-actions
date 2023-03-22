@@ -111,7 +111,8 @@ def review():
 
             response = openai.Completion.create(
                 engine=args.openai_engine,
-                prompt=(f"Please review code diff:\n```{diff_text}```"),
+                prompt=(f"Bellow is the code patch, please help me do a brief code review, 
+                    if any bug risk and improvement suggestion are welcome, diff:\n```{diff_text}```"),
                 temperature=float(args.openai_temperature),
                 max_tokens=int(args.openai_max_tokens)
             )
